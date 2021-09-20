@@ -1,11 +1,18 @@
 <template>
   <div>
     <h1>learning vue testing</h1>
-    <div>
-      <ul v-for="(todo, idx) in todos" :key="idx">
-        <!-- 테스트를 위한 id 속성 추가 -->
-        <li data-test="todo">{{ todo.text }}</li>
-      </ul>
+    <div
+      v-for="todo in todos"
+      :key="todo.id"
+      data-test="todo"
+      :class="todo.completed ? 'completed' : ''"
+    >
+      {{ todo.text }}
+      <input
+        v-model="todo.completed"
+        type="checkbox"
+        data-test="todo-checkbox"
+      />
     </div>
     <form data-test="form" @submit.prevent="createTodo">
       <input data-test="new-todo" v-model="newTodo" />
@@ -33,3 +40,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.completed {
+  text-decoration: line-through;
+}
+</style>
