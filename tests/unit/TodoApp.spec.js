@@ -1,19 +1,20 @@
-import { mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils'
 import TodoApp from '@/components/TodoApp.vue'
 
 describe('TodoApp.vue', () => {
-  it('should render todo text', () => {
-    const wrapper = mount(TodoApp)
+  let wrapper
 
+  beforeEach(() => {
+    wrapper = mount(TodoApp)
+  })
+
+  it('should render todo text', () => {
     // 특정 요소를 찾아서 테스트
     const todo = wrapper.get('[data-test="todo"]')
     expect(todo.text()).toBe('sleep well')
   })
 
   it('should add new todo', async () => {
-    // 모든 테스트 블록에서 컴포넌트 마운트 먼저 해줘야함
-    const wrapper = mount(TodoApp)
-    
     expect(wrapper.findAll('[data-test="todo"]')).toHaveLength(2)
 
     await wrapper.get('[data-test="new-todo"]').setValue('New Todo')
@@ -23,8 +24,6 @@ describe('TodoApp.vue', () => {
   })
 
   it('should be able to complete todo', async () => {
-    const wrapper = mount(TodoApp)
-    
     await wrapper.get('[data-test="todo-checkbox"]').setValue(true)
 
     expect(wrapper.get('[data-test="todo"]').classes()).toContain('completed')
